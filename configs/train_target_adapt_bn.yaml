@@ -4,7 +4,7 @@
 experiment_name: 'UNet_Abdomen_CT2MR_bn'
 data_root: '/mnt/ExtData/Data/processed/chaos/'
 save_root: '/mnt/ExtData/SFDA_DDFP/log/'
-source_model_path: '/mnt/ExtData/SFDA_unet/log_final/chao_log/src_train/UNet_Abdomen_CT_Seg/T2023-11-30 10:12:34_/saved_models/best_model_epoch_92_dice_0.9289.pth'
+source_model_path: '/mnt/ExtData/SFDA_unet/log_final/chao_log/src_train/UNet_Abdomen_CT_Seg/saved_models/best_model_epoch_92_dice_0.9289.pth'
 source_sites:
 - 'ct'
 target_sites:

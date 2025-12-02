@@ -5,8 +5,8 @@ doing: 'train'
 experiment_name: 'UNet_Abdomen_CT2MR_pmt'
 data_root: '/mnt/ExtData/Data/processed/chaos/'
 save_root: '/mnt/ExtData/SFDA_DDFP/log/revise/'
-source_model_path: '/mnt/ExtData/SFDA_DDFP/log/abdominal/UNet_Abdomen_CT2MR_bn/T2024-04-16 16:13:47_tuneall_epoch10/saved_models/model_step_0_dice_0.7580.pth' ## BN pre-adapted model
-bn_align_model: '/mnt/ExtData/SFDA_DDFP/log/abdominal/src_train/UNet_Abdomen_CT_Seg/T2023-11-30 10:12:34_/saved_models/best_model_epoch_92_dice_0.9289.pth' ## source model
+source_model_path:  ## BN pre-adapted model path
+bn_align_model:  ## source model path
 target_sites:
 - 'mr'
 dataset_name: 'abdomen'
@@ -23,6 +23,125 @@ wcls:
 wglo: 0.4
 alpha: 0.8
 theta: 0.2
+
+
+# experiment_name: 'UNet_Abdomen_MR2CT_pmt'
+# data_root: '/mnt/ExtData/Data/processed/chaos/'
+# save_root: '/mnt/ExtData/SFDA_DDFP/log/revise/'
+# source_model_path: 
+# bn_align_model: 
+# target_sites:
+# - 'ct'
+# dataset_name: 'abdomen'
+# w1: 0.1
+# w2: 1
+# w3: 10
+# lr: 0.0005
+# wcls: 
+# - 40 
+# - 40
+# - 40
+# - 40
+# - 40
+# wglo: 0.4
+# alpha: 0.8
+# theta: 0.2
+
+
+# experiment_name: 'UNet_cardiac_CT2MR_pmt'
+# data_root: '/mnt/ExtData/Data/MMWHS'
+# save_root: '/mnt/ExtData/SFDA_DDFP/log/revise/'
+# source_model_path:
+# bn_align_model: 
+# target_sites:
+# - 'mr'
+# dataset_name: 'cardiac'
+# w1: 4
+# w2: 0.1
+# w3: 10
+# lr: 0.001
+# wcls: 
+# - 40 
+# - 40
+# - 40
+# - 40
+# - 40
+# wglo: 0.4
+# alpha: 0.8
+# theta: 0.2
+
+
+# experiment_name: 'UNet_cardiac_MR2CT_pmt'
+# data_root: '/mnt/ExtData/Data/MMWHS'
+# save_root: '/mnt/ExtData/SFDA_DDFP/log/revise/'
+# source_model_path: 
+# bn_align_model:
+# target_sites:
+# - 'ct'
+# dataset_name: 'cardiac'
+# w1: 1
+# w2: 1
+# w3: 10
+# lr: 0.001
+# wcls: 
+# - 40 
+# - 40
+# - 40
+# - 40
+# - 40
+# wglo: 0.4
+# alpha: 0.8
+# theta: 0.2
+
+
+# experiment_name: 'UNet_Brats_flair_Seg'
+# data_root: '/mnt/ExtData/Data/preprocess_brats2018/'
+# save_root: '/mnt/ExtData/SFDA_DDFP/log/brats18'
+# source_model_path: 
+# bn_align_model: 
+# source_sites:
+# - 'flair'
+# target_sites:
+# - 't2'
+# dataset_name: 'brats'
+# w1: 5
+# w2: 10
+# w3: 20
+# lr: 0.0005
+# wcls: 
+# - 40 
+# - 40
+# - 40
+# - 40
+# - 40
+# wglo: 0.4
+# alpha: 0.8
+# theta: 0.2
+
+
+# experiment_name: 'UNet_Brats_t22flair_Seg'
+# data_root: '/mnt/ExtData/Data/preprocess_brats2018/'
+# save_root: '/mnt/ExtData/SFDA_DDFP/log/brats18'
+# bn_align_model: 
+# source_model_path: 
+# source_sites:
+# - 't2'
+# target_sites:
+# - 'flair'
+# dataset_name: 'brats'
+# w1: 5
+# w2: 1
+# w3: 10
+# lr: 0.0005
+# wcls: 
+# - 40 
+# - 40
+# - 40
+# - 40
+# - 40
+# wglo: 0.4
+# alpha: 0.8
+# theta: 0.2
 
 
 pmt_type: 'Data' #, 'Data' #'Domain' 'Spatial', None

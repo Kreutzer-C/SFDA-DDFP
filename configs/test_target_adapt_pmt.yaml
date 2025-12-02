@@ -12,8 +12,8 @@ target_sites:
 - 'mr'
 dataset_name: 'abdomen'
 
-ori_model_path: '/mnt/ExtData/SFDA_DDFP/log/abdominal/src_train/UNet_Abdomen_CT_Seg/T2023-11-30 10:12:34_/saved_models/best_model_epoch_92_dice_0.9289.pth' ## ori use for visualization
-source_model_path: '/mnt/ExtData/SFDA_DDFP/log/revise/UNet_Abdomen_CT2MR_pmt/ablation_cls/T2024-11-06 23:14:51_ftLSET1_Pmt_UNet_Data_w1110_cls30/saved_models/best_model_step_4_dice_0.8874.pth'
+ori_model_path: '/mnt/ExtData/SFDA_DDFP/log/abdominal/src_train/UNet_Abdomen_CT_Seg/saved_models/best_model_epoch_92_dice_0.9289.pth' ## ori use for visualization
+source_model_path: '' ## source Model paht 
 
 wcls: 
 - 40 
