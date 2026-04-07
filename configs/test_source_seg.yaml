@@ -1,14 +1,14 @@
 ##### Experiment Specific
 
 ## example
-experiment_name: 'UNet_Abdomen_CT_Seg_Test'
-data_root: '/mnt/ExtData/Data/processed/chaos/'
-save_root: '/log/abdominal_chaos/src_test/'
-source_model_path: '/log/abdominal_chaos/src_train/UNet_Abdomen_CT_Seg/T2023-11-30 10:12:34_/saved_models/best_model_epoch_92_dice_0.9289.pth'
+experiment_name: 'UNet_Abdomen_MR_Seg_Test'
+data_root: '/opt/data/private/SFDA-DDFP/datasets/chaos'
+save_root: '/opt/data/private/SFDA-DDFP/results'
+source_model_path: '/opt/data/private/SFDA-DDFP/results/UNet_Abdomen_MR_Seg/T2026-03-08 20:06:24_/saved_models/best_model_epoch_139_dice_0.9294.pth'
 source_sites:
-- 'ct'
-target_sites:
 - 'mr'
+target_sites:
+- 'ct'
 dataset_name: 'abdomen'
 
 resume: ''
