@@ -2,8 +2,8 @@
 
 ## example
 experiment_name: 'UNet_Abdomen_CT_Seg'
-data_root: '/mnt/ExtData/Data/processed/chaos/'
-save_root: '/mnt/ExtData/SFDA_DDFP/log/deeplabv3'
+data_root: '/opt/data/private/SFDA-DDFP/datasets/chaos'
+save_root: '/opt/data/private/SFDA-DDFP/results'
 source_sites:
 - 'ct'
 target_sites:

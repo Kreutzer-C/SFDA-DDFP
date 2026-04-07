@@ -6,14 +6,14 @@ save: False ## save visualization or not
 
 ## example
 experiment_name: 'UNet_Abdomen_CT2MR_pmt'
-data_root: '/mnt/ExtData/Data/processed/chaos/'
-save_root: '/mnt/ExtData/SFDA_DDFP/log/revise/test'
+data_root: '/opt/data/private/SFDA-DDFP/datasets/chaos'
+save_root: '/opt/data/private/SFDA-DDFP/results'
 target_sites:
 - 'mr'
 dataset_name: 'abdomen'
 
-ori_model_path: '/mnt/ExtData/SFDA_DDFP/log/abdominal/src_train/UNet_Abdomen_CT_Seg/saved_models/best_model_epoch_92_dice_0.9289.pth' ## ori use for visualization
-source_model_path: '' ## source Model paht 
+ori_model_path: '/opt/data/private/SFDA-DDFP/results/UNet_Abdomen_CT2MR_pmt/T2026-03-25 17:37:28_ftLSET1_Pmt_UNet_Data_w1110_/saved_models/model_step_22_dice_0.8428.pth' ## ori use for visualization
+source_model_path: '/opt/data/private/SFDA-DDFP/results/UNet_Abdomen_CT2MR_pmt/T2026-03-25 17:37:28_ftLSET1_Pmt_UNet_Data_w1110_/saved_models/model_step_22_dice_0.8428.pth' ## source Model paht 
 
 wcls: 
 - 40 

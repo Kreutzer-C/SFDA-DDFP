@@ -2,14 +2,14 @@
 
 ## example
 experiment_name: 'UNet_Abdomen_CT2MR_bn'
-data_root: '/mnt/ExtData/Data/processed/chaos/'
-save_root: '/mnt/ExtData/SFDA_DDFP/log/'
-source_model_path: '/mnt/ExtData/SFDA_unet/log_final/chao_log/src_train/UNet_Abdomen_CT_Seg/saved_models/best_model_epoch_92_dice_0.9289.pth'
+data_root: '/opt/data/private/SFDA-DDFP/datasets/chaos'
+save_root: '/opt/data/private/SFDA-DDFP/results'
+source_model_path: '/opt/data/private/SFDA-DDFP/results/UNet_Abdomen_CT_Seg/T2026-03-08 20:20:47_/saved_models/best_model_epoch_125_dice_0.9338.pth'
 source_sites:
 - 'ct'
 target_sites:
 - 'mr'
-
+dataset_name: 'abdomen'
 
 resume_dir: ''
 continue_train: False

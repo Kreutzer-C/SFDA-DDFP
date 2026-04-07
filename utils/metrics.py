@@ -119,8 +119,8 @@ class MultiClassDiceLoss(nn.Module):
         return totalLoss/count, dice_wobg/(count-1), class_wise
 
 def cal_average_surface_distance(input,target):
-    input = input.cpu().numpy().astype(np.bool8)
-    target = target.cpu().numpy().astype(np.bool8)
+    input = input.cpu().numpy().astype(bool)
+    target = target.cpu().numpy().astype(bool)
     surface_distances = surfdist.compute_surface_distances(input, target, spacing_mm=(1.0, 1.0, 1.0))
     avg_surf_dist = surfdist.compute_average_surface_distance(surface_distances)
     return (avg_surf_dist[0]+avg_surf_dist[1])/2
