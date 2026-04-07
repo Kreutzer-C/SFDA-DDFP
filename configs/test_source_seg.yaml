@@ -2,9 +2,9 @@
 
 ## example
 experiment_name: 'UNet_Abdomen_CT_Seg_Test'
-data_root: '/mnt/ExtData/Data/processed/chaos/'
-save_root: '/log/abdominal_chaos/src_test/'
-source_model_path: '/log/abdominal_chaos/src_train/UNet_Abdomen_CT_Seg/T2023-11-30 10:12:34_/saved_models/best_model_epoch_92_dice_0.9289.pth'
+data_root: '/opt/data/private/SFDA-DDFP/datasets/chaos'
+save_root: '/opt/data/private/SFDA-DDFP/results'
+source_model_path: '/opt/data/private/SFDA-DDFP/results/UNet_Abdomen_CT_Seg/T2026-03-08 20:20:47_/saved_models/best_model_epoch_125_dice_0.9338.pth'
 source_sites:
 - 'ct'
 target_sites:
