@@ -2,13 +2,13 @@
 doing: 'train'
 
 ## example
-experiment_name: 'UNet_Abdomen_CT2MR_pmt'
-data_root: '/mnt/ExtData/Data/processed/chaos/'
-save_root: '/mnt/ExtData/SFDA_DDFP/log/revise/'
-source_model_path:  ## BN pre-adapted model path
-bn_align_model:  ## source model path
+experiment_name: 'UNet_Abdomen_MR2CT_pmt'
+data_root: '/workspace/SFDA-DDFP/datasets/chaos'
+save_root: '/workspace/SFDA-DDFP/results'
+source_model_path:  '/workspace/SFDA-DDFP/results/UNet_Abdomen_MR_Seg/T2026-03-08 20:06:24_/saved_models/best_model_epoch_139_dice_0.9294.pth'
+bn_align_model:  '/workspace/SFDA-DDFP/results/UNet_Abdomen_MR2CT_bn/T2026-03-27 10:16:22_tuneall_epoch10/saved_models/model_step_0_dice_0.6305.pth'
 target_sites:
-- 'mr'
+- 'ct'
 dataset_name: 'abdomen'
 w1: 1
 w2: 1
@@ -169,8 +169,8 @@ organ_list:
 # Dataloader Setting
 patient_level_dataloader: False
 img_size:
-- 240
-- 240
+- 256
+- 256
 batch_size: 16
 num_workers: 8
 
@@ -181,7 +181,7 @@ update_prototype: False
 input_dim: 3
 feat_dim: 32
 output_dim: 64
-num_classes: 2
+num_classes: 5
 num_prototypes: 1
 
 # Loss parameters
@@ -190,7 +190,7 @@ beta: 0.001
 s_par: 0.5
 dice_ignore_index: -1
 # display
-save_steps: 500
+save_steps: 50
 eval_steps: 2
 display_steps: 20
 save_visuals: True
