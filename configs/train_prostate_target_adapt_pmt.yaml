@@ -1,0 +1,65 @@
+##### Experiment Specific
+doing: 'train'
+experiment_name: 'UNet_Prostate_Source2Target1_PMT'
+dataset: 'PROSTATE'
+dataset_name: 'prostate'
+data_root: '/opt/data/private/MedSeg_Data_Process/PROSTATE/processed_new'
+save_root: '/opt/data/private/SFDA-DDFP/results'
+source_model_path: '/opt/data/private/SFDA-DDFP/results/UNet_Prostate_Source2Target1_BN/T2026-06-21 21:35:35_tuneall_epoch10/saved_models/model_step_0_dice_0.7622.pth'
+bn_align_model: '/opt/data/private/SFDA-DDFP/results/UNet_Prostate_Source2Target1_BN/T2026-06-21 21:35:35_tuneall_epoch10/saved_models/model_step_0_dice_0.7622.pth'
+target_domain: 'target_1'
+w1: 1
+w2: 1
+w3: 10
+lr: 0.0005
+wcls:
+- 40
+- 40
+wglo: 0.4
+alpha: 0.8
+theta: 0.2
+
+pmt_type: 'Data'
+train_type: 'LSET1'
+pmt_size: 384
+es_step: 10
+resume_dir: ''
+continue_train: False
+total_epochs: 1
+
+random_seed: 999
+organ_list:
+- 'Prostate'
+
+# Dataloader Setting
+patient_level_dataloader: False
+img_size:
+- 384
+- 384
+batch_size: 8
+num_workers: 8
+
+# Model
+arch: 'Pmt_UNet'
+use_prototype: False
+update_prototype: False
+input_dim: 3
+feat_dim: 32
+output_dim: 64
+num_classes: 2
+num_prototypes: 1
+
+# Loss parameters
+nav_t: 1
+beta: 0.001
+s_par: 0.5
+dice_ignore_index: -1
+
+# display
+save_steps: 50
+eval_steps: 2
+display_steps: 20
+save_visuals: True
+
+# test
+test: False

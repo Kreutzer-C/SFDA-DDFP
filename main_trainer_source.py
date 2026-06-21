@@ -22,7 +22,7 @@ def ensure_dirs(opt):
     curr_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
     if opt['dev']:
         exp_name = 'dev'
-    elif  opt['config_file'].startswith('configs/test_source_seg'):
+    elif  opt['config_file'].startswith('configs/test_source_seg') or opt['config_file'].startswith('configs/test_prostate_source_seg'):
         best_result = opt['source_model_path'].split('/')[-1].split('_')[-1][:6]
         load_name =  opt['source_model_path'].split('/')[-3]
         exp_name = f'T{curr_time}_LOADING_{load_name}_RESULT_{best_result}'
@@ -77,10 +77,10 @@ if __name__ == '__main__':
     opt = get_options(parser)
     ensure_dirs(opt)
 
-    if opt['config_file'].startswith('configs/train_source_seg'): 
+    if opt['config_file'].startswith('configs/train_source_seg') or opt['config_file'].startswith('configs/train_prostate_source_seg'): 
         print('======= Using train Trainer')
         trainer = SourceDomainTrainer(opt)
-    elif opt['config_file'].startswith('configs/test_source_seg'): 
+    elif opt['config_file'].startswith('configs/test_source_seg') or opt['config_file'].startswith('configs/test_prostate_source_seg'): 
         print('======= Using test Trainer')
         trainer = SourceDomainTest(opt)
 

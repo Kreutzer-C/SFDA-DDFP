@@ -175,7 +175,13 @@ class UNet(nn.Module):
             self.outc = OutConv(64, n_classes)
 
         # if opt['config_file'] not in ('configs/train_source_seg.yaml', 'configs/test_source_seg.yaml'):
-        if not (opt['config_file'].startswith('configs/train_source_seg') or opt['config_file'].startswith('configs/test_source_seg')):
+        config_file = opt.get('config_file', '')
+        is_source_train = (config_file.startswith('configs/train_source_seg') or
+                          config_file.startswith('configs/test_source_seg') or
+                          config_file.startswith('configs/train_prostate_source_seg') or
+                          config_file.startswith('configs/test_prostate_source_seg'))
+        is_test = opt.get('doing') == 'test'
+        if not is_source_train and not is_test:
             self.src_params = torch.load(opt['source_model_path'], map_location='cpu')['model']
 
             self.bn_loss_hooks = []

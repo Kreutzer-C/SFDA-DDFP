@@ -213,10 +213,10 @@ class Pmt_UNet(nn.Module):
             )
 
         ### aligning target model's bn statistic with which model (default: source, you can also switch the opt['bn_align_model'] ot other model(only for ablation))
-        if opt['doing'] == 'train':
+        if opt.get('doing') == 'train':
             self.src_params = torch.load(opt['bn_align_model'], map_location='cpu')['model']
-        else:
-            self.src_params = torch.load(opt['source_model_path'], map_location='cpu')['model'] # not going to use for any calculation
+        elif opt.get('doing') != 'test' and opt.get('source_model_path'):
+            self.src_params = torch.load(opt['source_model_path'], map_location='cpu')['model']
 
         self.bn_loss_hooks = []
         for name, module in self.named_modules():

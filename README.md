@@ -50,6 +50,96 @@ python main_trainer_sfda.py --config_file configs/train_target_adapt_pmt.yaml --
 python main_trainer_sfda.py --config_file configs/test_target_adapt_pmt.yaml --gpu_id 0 
 ```
 
+---
+
+## PROSTATE Dataset Pipeline
+
+### Supported Datasets
+
+| Dataset | Classes | Image Size | Format | Domains |
+|---------|---------|-----------|--------|---------|
+| **CHAOS/Abdomen** | 5 (bg + 4 organs) | 256x256 | .npy stacked | CT / MR |
+| **PROSTATE** | 2 (bg + prostate) | 384x384 | .npz (img/label) | source (BMC+RUNMC), target_1 (BIDMC+HK+UCL), target_2 (I2CVB) |
+
+#### PROSTATE Dataset Structure
+```
+PROSTATE/processed_new/
+  metadata.json              # train/test splits by case ID per domain
+  source/slices/             # .npz files (BMC + RUNMC)
+  target_1/slices/           # .npz files (BIDMC + HK + UCL)
+  target_2/slices/           # .npz files (I2CVB)
+```
+
+### Step 1: Source Domain Pre-training
+
+```bash
+python main_trainer_source.py     --config_file configs/train_prostate_source_seg.yaml     --gpu_id 0
+```
+
+Key config: `dataset: PROSTATE`, `num_classes: 2`, `img_size: [384,384]`, `total_epochs: 100`, `lr: 0.001`
+
+### Step 2: Test Source Model (Baseline)
+
+```bash
+# Test on all domains
+for domain in source target_1 target_2; do
+    python test.py --dataset PROSTATE --domain          --data_root /path/to/PROSTATE/processed_new         --model_path results/UNet_Prostate_Source_Seg/.../saved_models/best_model_*.pth         --gpu_id 0
+done
+```
+
+### Step 3: BN Pre-adaptation
+
+Set `source_model_path` in `configs/train_prostate_target_adapt_bn.yaml`, then:
+
+```bash
+python target_adapt_trainer.py     --config_file configs/train_prostate_target_adapt_bn.yaml     --gpu_id 0
+```
+
+### Step 4: PMT Target Adaptation
+
+Set `source_model_path` and `bn_align_model` in `configs/train_prostate_target_adapt_pmt.yaml` to the BN-adapted model, then:
+
+```bash
+python main_trainer_sfda.py     --config_file configs/train_prostate_target_adapt_pmt.yaml     --gpu_id 0
+```
+
+### Step 5: Test Adapted Model
+
+```bash
+# Test PMT-adapted model on target domains
+for domain in target_1 target_2; do
+    python test.py --dataset PROSTATE --domain          --data_root /path/to/PROSTATE/processed_new         --model_path results/UNet_Prostate_Source2Target1_PMT/.../saved_models/best_model_*.pth         --arch Pmt_UNet --gpu_id 0
+done
+```
+
+### Test Script (`test.py`)
+
+Unified testing script supporting both CHAOS and PROSTATE datasets with 3D volume-level Dice and ASSD metrics.
+
+**Arguments**:
+
+| Argument | Default | Description |
+|----------|---------|-------------|
+| `--dataset` | `CHAOS` | `CHAOS` or `PROSTATE` |
+| `--model_path` | (required) | Path to checkpoint `.pth` |
+| `--data_root` | `datasets/chaos` | Dataset root directory |
+| `--domain` | `source` | PROSTATE domain (`source`, `target_1`, `target_2`) |
+| `--arch` | auto | Model architecture (`UNet` or `Pmt_UNet`, auto-detected from config.json) |
+| `--num_classes` | auto | Number of classes (auto: 5 for CHAOS, 2 for PROSTATE) |
+| `--gpu_id` | `0` | GPU device ID |
+
+Results are automatically saved as `test_results_<domain>.txt` in the experiment folder.
+
+### PROSTATE Results (DDFP)
+
+| Stage | source Dice | target_1 Dice | target_2 Dice |
+|-------|------------|---------------|---------------|
+| Source-only | 0.8985 | 0.7338 | 0.6102 |
+| BN-adapted | - | 0.8245 | - |
+| PMT-adapted | - | 0.8306 | 0.3329 |
+
+**Note**: PMT adaptation was optimized for target_1. The target_2 degradation is expected since no adaptation was performed specifically for target_2.
+
 ## Citation 
 If you find the code useful for your research, please cite our paper.
 ```

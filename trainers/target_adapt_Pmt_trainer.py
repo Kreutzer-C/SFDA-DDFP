@@ -3,7 +3,7 @@ import torch.nn.functional as F
 import os,random
 from einops import rearrange
 from models import get_model
-from dataloaders import MyDataset147
+from dataloaders import MyDataset147, ProstateDataset
 from torch.utils.data import DataLoader
 from losses import PseuLoss, MultiClassDiceLoss, EntLoss
 import numpy as np
@@ -23,22 +23,30 @@ class pmt_Trainer():
         self.set_seed(self.opt['random_seed'])
 
         ### 1. initialize dataloaders
-        self.train_dataloader = DataLoader(
-            MyDataset147(self.opt['data_root'], self.opt['target_sites'], dataset_name=self.opt['dataset_name'], phase='train'),
-            batch_size=self.opt['batch_size'],
-            shuffle=True,
-            drop_last=True,
-            num_workers=self.opt['num_workers']
-        )
+        is_prostate = self.opt.get('dataset') == 'PROSTATE'
+        if is_prostate:
+            tgt_domain = self.opt['target_domain']
+            img_sz = tuple(self.opt['img_size'])
+            self.train_dataloader = DataLoader(
+                ProstateDataset(self.opt['data_root'], tgt_domain, phase='train',
+                                split_train=True, img_size=img_sz),
+                batch_size=self.opt['batch_size'], shuffle=True, drop_last=True,
+                num_workers=self.opt['num_workers'])
+            self.val_dataloader = DataLoader(
+                ProstateDataset(self.opt['data_root'], tgt_domain, phase='val',
+                                split_train=False, img_size=img_sz),
+                batch_size=self.opt['batch_size'], shuffle=False, drop_last=False,
+                num_workers=4)
+        else:
+            self.train_dataloader = DataLoader(
+                MyDataset147(self.opt['data_root'], self.opt['target_sites'], dataset_name=self.opt['dataset_name'], phase='train'),
+                batch_size=self.opt['batch_size'], shuffle=True, drop_last=True,
+                num_workers=self.opt['num_workers'])
+            self.val_dataloader = DataLoader(
+                MyDataset147(self.opt['data_root'], self.opt['target_sites'], dataset_name=self.opt['dataset_name'], phase='val'),
+                batch_size=self.opt['batch_size'], shuffle=False, drop_last=False,
+                num_workers=4)
         print('Length of training dataset: ', len(self.train_dataloader))
-
-        self.val_dataloader = DataLoader(
-            MyDataset147(self.opt['data_root'], self.opt['target_sites'], dataset_name=self.opt['dataset_name'], phase='val'),
-            batch_size=self.opt['batch_size'],
-            shuffle=False,
-            drop_last=False,
-            num_workers=4
-        )
         print('Length of validation dataset: ', len(self.val_dataloader))
  
         ### 2. initialize the target model as self.model. IN TRAINING MODE

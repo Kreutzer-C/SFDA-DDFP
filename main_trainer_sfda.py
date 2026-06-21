@@ -92,7 +92,7 @@ if __name__ == '__main__':
     ensure_dirs(opt)
 
     ## config file and trainer init
-    if opt['config_file'].startswith('configs/train_target_adapt_pmt'):
+    if opt['config_file'].startswith('configs/train_target_adapt_pmt') or opt['config_file'].startswith('configs/train_prostate_target_adapt_pmt'):
         print('Using pmt prompt Trainer')
         if opt['arch'] in ('Pmt_DeepLab', 'DeepLab'):
             trainer = deeplab_pmt_Trainer(opt)
